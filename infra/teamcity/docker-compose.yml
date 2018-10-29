@@ -1,21 +1,28 @@
-version: '3.1'
+version: '3.4'
 
 services: 
   teamcity:
     image: jetbrains/teamcity-server
+    build:
+      network: bridge
+      context: .
     volumes:
       - teamcity-server-datadir:/data/teamcity_server/datadir
       - teamcity-server-logs:/opt/teamcity/logs
     ports:
-      - "8111:8111"
+      - "8111:8111"      
 
   teamcity-agent:
     image: jetbrains/teamcity-agent
-    privileged: true
+    privileged: true    
+    build:
+      network: host
+      context: .
     environment:
       - SERVER_URL=http://teamcity:8111
-      - DOCKER_IN_DOCKER=start      
-    
+      - DOCKER_IN_DOCKER=start     
+      - INSECURE_REGISTRY='--insecure-registry=my-registry:55000'             
+      
 volumes:
   teamcity-server-datadir:
   teamcity-server-logs:
