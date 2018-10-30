@@ -3,9 +3,6 @@ version: '3.4'
 services: 
   teamcity:
     image: jetbrains/teamcity-server
-    build:
-      network: bridge
-      context: .
     volumes:
       - teamcity-server-datadir:/data/teamcity_server/datadir
       - teamcity-server-logs:/opt/teamcity/logs
@@ -15,9 +12,6 @@ services:
   teamcity-agent:
     image: jetbrains/teamcity-agent
     privileged: true    
-    build:
-      network: host
-      context: .
     environment:
       - SERVER_URL=http://teamcity:8111
       - DOCKER_IN_DOCKER=start     
