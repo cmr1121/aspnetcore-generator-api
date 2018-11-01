@@ -15,8 +15,9 @@ services:
     environment:
       - SERVER_URL=http://teamcity:8111
       - DOCKER_IN_DOCKER=start     
-      - INSECURE_REGISTRY='--insecure-registry=my-registry:55000'             
-      
+    extra_hosts:
+      - "my-registry:172.16.27.34"
+
 volumes:
   teamcity-server-datadir:
   teamcity-server-logs:
