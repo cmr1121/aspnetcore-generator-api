@@ -8,9 +8,12 @@ services:
       - teamcity-server-logs:/opt/teamcity/logs
     ports:
       - "8111:8111"      
+    extra_hosts:
+      - "my-registry:172.16.27.34"
 
   teamcity-agent:
-    image: jetbrains/teamcity-agent
+    image: aspnetcore/teamcity-agent
+    build: ./agent
     privileged: true    
     environment:
       - SERVER_URL=http://teamcity:8111
